@@ -48,7 +48,9 @@ int WordCount::getWordCount(const std::string & word) const {
 int WordCount::incrWordCount(const std::string & word) {
 	string validword = makeValidWord(word);
 	int count = 0;
-	if(getWordCount(validword) == 0){
+	if(validword == "")
+		return 0;
+	else if(getWordCount(validword) == 0){
 		table[hash(validword)].push_back(pair<string, int> (validword, 1));
 		count = 1;
 	}
@@ -66,7 +68,9 @@ int WordCount::incrWordCount(const std::string & word) {
 int WordCount::decrWordCount(const std::string & word) {
 	string validword = makeValidWord(word);
 	int count = -1;
-	if(getWordCount(validword) == 1){
+	if(validword == "")
+		return -1;
+	else if(getWordCount(validword) == 1){
 		for(size_t i = 0; i < table[hash(validword)].size(); i++){
 			if(table[hash(validword)][i].first == validword){
 				table[hash(validword)].erase(table[hash(validword)].begin()+i);
