@@ -1,46 +1,46 @@
 #include "tddFuncs.h"
 #include <iostream>
-#include <cstring>
-#include <string_view>
+#include <sstream>
+#include <cstdlib>
 using std::cout;
 using std::endl;
+using std::cerr;
+using std::ostringstream;
 
-std::string convertLineNumber(int lineNumber) {
-  std::string retVal{};
-  if (lineNumber > 0) 
-    retVal += " line: " + std::to_string(lineNumber);
-  return retVal;
+void assertEquals(const char* expected, 
+                  const char* actual, 
+                  std::string message) {
+  assertEquals(std::string(expected), std::string(actual), message);
 }
 
-void assertEquals(const char * const expected, 
-		  const char * const actual, 
-		  const std::string & message,
-		  int lineNumber) {
-  std::string line = convertLineNumber(lineNumber);
-  if ( std::string_view(expected) == actual ) {  // if they are equal
-    cout << "PASSED: " << message << line <<  endl;;
-  } else {
-    cout << "   FAILED: " << message << line << endl 
-	 << "     Expected: " << expected << " Actual: " << actual << endl; 
-  }
+void assertEquals(const char* expected, 
+                  std::string actual, 
+                  std::string message) {
+
+  assertEquals(std::string(expected), actual, message);
+
 }
 
-void assertEquals(const char * const expected, 
-		  const std::string & actual, 
-		  const std::string & message,
-		  int lineNumber) {
-  assertEquals(std::string(expected),actual,message,lineNumber);
-}
 
 void assertTrue(bool expression,
-		const std::string & message,
-		int lineNumber) {
-  std::string line = convertLineNumber(lineNumber);
+    std::string message) {
+
+  std::ostringstream ea;
+  
   if (expression) {
-    cout << "PASSED: " << message << line << endl;;
+    ea << "| PASSED: " << message << endl;
   } else {
-    cout << "   FAILED: " << message << line << endl 
-	 << "     Expected true, but was false " << endl;
+    ea << "|   FAILED: " << message << endl;
   }
+  cout << ea.str();
 }
 
+
+void addTest(double score,
+       double max_score,
+       std::string name,
+       std::string output) {}
+
+void SET_VISIBILITY(std::string visibility) {}
+void START_GROUP(double points, const char* const name){}
+void END_GROUP(){}

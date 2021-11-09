@@ -95,11 +95,19 @@ bool WordCount::isWordChar(char c) {
 std::string WordCount::makeValidWord(const std::string & word) {
 	string nword = "";
 	for(size_t i = 0; i < word.size()+1; i++){
-		if((int(word[i]) >= 97 && int(word[i]) <= 122) || isWordChar(word[i]) ){
+		if((int(word[i]) >= 97 && int(word[i]) <= 122) || isWordChar(word[i])){
 			nword += tolower(word[i]);
 		}
 		else if(!(i == 0 || i == word.size()) && (word[i] == '-' || word[i] == '\'')){
 			nword += word[i];
+		}
+	}
+	while(nword[0] == '-' || nword[nword.size() - 1] == '-' || nword[0] == '\'' || nword[nword.size() - 1] == '\''){
+		if(nword[0] == '-' || nword[0] == '\''){
+			nword = nword.substr(1, nword.size()-1);
+		}
+		else if(nword[nword.size()-1] == '-' || nword[nword.size()-1] == '\''){
+			nword = nword.substr(0, nword.size()-1);
 		}
 	}
 	return nword;

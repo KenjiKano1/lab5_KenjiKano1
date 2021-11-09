@@ -2,47 +2,54 @@
 #define TDDFUNCS_H
 
 #include <string>
+#include <sstream>
 #include <iostream>
 
-// Helper function that converts line number to string for printing
-std::string convertLineNumber(int lineNumber);
 
-// template requires == and << 
+void assertEquals(const char* expected, 
+		  const char* actual, 
+		  std::string message);
 
-template<typename T> void assertEquals(T expected, 
-				       T actual, 
-				       std::string message,
-				       int lineNumber) {
-  std::string line=convertLineNumber(lineNumber);
+void assertEquals(const char* expected, 
+		  std::string actual, 
+		  std::string message);
+
+void addTest(double score,
+          double max_score,
+          std::string name,
+          std::string output);
+
+template <class T, class G>
+void assertEquals(T expected, 
+                  T actual, 
+                  G message) {
+  std::ostringstream ea;
+  //ea << "Expected: " << expected << " Actual: " << actual; 
+    
   if (expected==actual) {
-    std::cout << "PASSED: " << message << line << std::endl;;
+    ea << "| PASSED: " << message << std::endl;
+    
+    addTest(1,1,message, ea.str());
   } else {
-    std::cout << "   FAILED: " << message << line << std::endl
-	      << "     Expected: "  << expected << " Actual: " << actual << std::endl; 
+    ea << "|   FAILED: " << message 
+       << " Expected: " << expected << " Actual: " << actual << std::endl;
+    addTest(0,1,message, ea.str());
   }
+  std::cout << ea.str();
 }
 
-// specialized because char * doesn't work properly on ==
-void assertEquals(const char * const expected, 
-		  const char * const actual, 
-		  const std::string & message,
-		  int lineNumber=-1);
 
-// specialized for the same reason, and because expected is often a string literal
-void assertEquals(const char * const expected, 
-		  const std::string & actual, 
-		  const std::string & message,
-		  int lineNumber=-1);
+#define ASSERT_EQUALS(expected,actual) assertEquals(expected,actual,#actual)
+#define ASSERT_TRUE(expression) assertTrue(expression,#expression)
+ 
+// set visibility to something I want
 
-// Macros to insert file and line number to the message
+void assertTrue(bool expression, std::string message="");
 
-#define ASSERT_EQUALS(expected,actual) \
-  assertEquals(expected,actual,#actual " at " __FILE__ ,  __LINE__ )
+void SET_VISIBILITY(std::string visibility="visible");
+void START_GROUP(double points, const char* const name);
+void END_GROUP();
 
 
-void assertTrue(bool expression, const std::string & message="", int lineNumber=-1);
-
-#define ASSERT_TRUE(expression) \
-  assertTrue(expression,#expression " at " __FILE__, __LINE__)
 
 #endif // TDDFUNCS_H

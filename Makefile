@@ -16,5 +16,24 @@ all: ${BINARIES}
 
 lab5Test: lab5Test.o WordCount.o tddFuncs.o
 	${CXX} $^ -o $@
+
+test00: testWordCount00.o WordCount.o tddFuncs.o
+	${CXX} $^ -o $@
+
+test01: testWordCount01.o WordCount.o tddFuncs.o
+	${CXX} $^ -o $@
+
+test02: testWordCount02.o WordCount.o tddFuncs.o
+	${CXX} $^ -o $@
+
+test03: testWordCount03.o WordCount.o tddFuncs.o
+	${CXX} $^ -o $@
+
+test04: testWordCount04.o WordCount.o tddFuncs.o
+	${CXX} $^ -o $@
+
+test05: testWordCount05.o WordCount.o tddFuncs.o
+	${CXX} $^ -o $@
+
 clean:
 	/bin/rm -f ${BINARIES} *.o
