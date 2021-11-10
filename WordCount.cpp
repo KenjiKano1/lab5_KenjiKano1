@@ -90,7 +90,7 @@ int WordCount::decrWordCount(const std::string & word) {
 }
 
 bool WordCount::isWordChar(char c) {
-	if(int(c) <= 90  && int(c) >= 65)
+	if((int(c) <= 90  && int(c) >= 65) || (int(c) >= 97 && int(c) <= 122))
 		return true;
 
 	return false;
